@@ -38,5 +38,35 @@ public class EmployeeService {
     }
 
 
+    public Employee getEmployeeWithMaxSalary () {
+        return employees.values()
+                .stream()
+                .max(Comparator.comparing(Employee::getSalary))
+                .orElseThrow(() -> new EmployeeNotFoundException());
+    }
+
+    public Employee getEmployeeWithMinSalary () {
+        return   employees.values()
+                .stream()
+                .min(Comparator.comparing(Employee::getSalary))
+                .orElseThrow(() -> new EmployeeNotFoundException());
+    }
+
+    public List<Employee> getEmployeeWithSalaryHigh () {
+        Double averageSalary = getAverageSalary();
+        if (averageSalary == null) {
+            return Collections.emptyList();
+        }
+        return employees.values()
+                .stream()
+                .filter(e -> e.getSalary() > averageSalary)
+                .collect(Collectors.toList());
+    }
+
+    private Double getAverageSalary() {
+        return employees.values()
+                .stream()
+                .collect(Collectors.averagingInt(Employee::getSalary));
+    }
 
 }
