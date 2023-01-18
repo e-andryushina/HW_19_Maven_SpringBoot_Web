@@ -19,9 +19,9 @@ public class EmployeeService {
         return this.employees.values();
     }
 
-    public Employee addEmployee (EmployeeRequest employeeRequest) {
-        if(StringUtils.isAlpha(employeeRequest.getFirstName())
-                || StringUtils.isAlpha(employeeRequest.getLastName())) {
+    public Employee addEmployee(EmployeeRequest employeeRequest) {
+        if(!StringUtils.isAlpha(employeeRequest.getFirstName())
+                || !StringUtils.isAlpha(employeeRequest.getLastName())) {
             throw new InvalidEmployeeRequestException ();
         }
         Employee employee = new Employee(StringUtils.capitalize(employeeRequest.getFirstName()),
@@ -39,7 +39,6 @@ public class EmployeeService {
                 .sum();
     }
 
-
     public Employee getEmployeeWithMaxSalary () {
         return employees.values()
                 .stream()
@@ -54,7 +53,7 @@ public class EmployeeService {
                 .orElseThrow(() -> new EmployeeNotFoundException());
     }
 
-    public List<Employee> getEmployeeWithSalaryHigh () {
+    public List<Employee> getEmployeeWithSalaryMoreThanAverage () {
         Double averageSalary = getAverageSalary();
         if (averageSalary == null) {
             return Collections.emptyList();
@@ -70,5 +69,12 @@ public class EmployeeService {
                 .stream()
                 .collect(Collectors.averagingInt(Employee::getSalary));
     }
+
+    public Employee removeEmployee (int id) {
+        return employees.remove(id);
+    }
+
+
+
 
 }

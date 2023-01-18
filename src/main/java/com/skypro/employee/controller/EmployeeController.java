@@ -54,7 +54,7 @@ public class EmployeeController {
 
     @GetMapping ("/employees/salary/high")
     public List<Employee> getEmployeeWithSalaryHigh () {
-        return this.employeeService.getEmployeeWithSalaryHigh();
+        return this.employeeService.getEmployeeWithSalaryMoreThanAverage();
     }
 
 }
